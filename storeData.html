@@ -1,0 +1,215 @@
+
+<html>
+
+  <head>
+
+    <title>TEAMWORK 11</title>
+
+    <style>
+
+      body {
+
+        font-family: arial;
+
+      }
+
+    </style>
+
+    <script src="https://www.gstatic.com/firebasejs/7.5.1/firebase-app.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/7.5.1/firebase-database.js"></script>
+
+    <script>
+
+      // Your web app's Firebase configuration
+
+      var firebaseConfig = {
+        *** YOUR FIREBASE CREDENTIALS HERE ***
+      };
+
+      // Initialize Firebase
+
+      firebase.initializeApp(firebaseConfig);
+      firebase.analytics();
+
+    </script>
+
+    <!-- KEEP THESE <script> sections separate. -->
+
+    <script>
+
+        /*****************
+        *                *
+        * function go()  *
+        *                *
+        *****************/
+
+        function go() {
+
+            /*******************************************************
+            *                                                      *
+            * get data from interface <textareaa> with id = 'data' *
+            *                                                      *
+            *******************************************************/
+
+            data = document.getElementById('data').value;
+
+            data = data.trim();
+
+            /**********************************************************************
+            *                                                                     *
+            * if data == '' display "nice message" in the div 'result' and return *
+            *                                                                     *
+            **********************************************************************/
+
+           if (data == '') {
+
+                *** ADD LINE OF CODE HERE TO DISPLAY MESSAGE WItH COLOR red IN 'result' ***
+  
+                return;
+
+            }
+
+
+            / *
+
+                GO TO WEB APP ESSENTIALS / JAVASCRIPT / SPLITTING DATA TO MAKE ARRAYS / EXAMPLE 2 
+
+                  data (one company per row) are split into the array arrayOfCompanies
+
+                HERE
+
+                  "data" is split to an array "states". The delimiter is '\n'
+
+            */
+
+            states = *** COMPLETE LINE ***
+
+            /************************************************************************************************************************
+            *                                                                                                                       *
+            * use a for loop to process all values in the array states. each value is a whole row from <textareaa> with id = 'data' *
+            *                                                                                                                       *
+            ************************************************************************************************************************/
+
+            Here use states. In EXAMPLE #2 allCOmpanies is used.
+
+            for (*** COMPLETE FOR LOOP HERE ***.) {
+
+                /*
+
+                  split states into array oneState with: state name & list of virus cases per day
+
+                  In EXAMPLE #2 allCOmpanies is processed in a for loop. each loop gives oneCompanywhuch becomes companyName and companyRevenue
+
+                  Here: use states, oneState and state and cases
+
+                */
+
+                oneState = states[i];
+
+                stateParts = *** COMPLETE LINE ***
+
+                state = *** COMPLETE LINE *** 
+
+                cases = *** COMPLETE LINE *** 
+
+                // After getting state and cases build Firebase path for the state being processed
+
+                path = '/states/' + state + '/';
+
+                // set or update the Firebase database
+
+                firebase.database().ref(path).set({
+
+                  cases: cases
+
+                }).then(()=>{
+
+                  // after the data is recorded go back to home page
+
+                  location = 'index.html';
+
+                });
+
+            } // this line is the end of the for loop.
+
+
+        };
+
+    </script>
+
+   </head>
+
+  <body>
+
+        /********************************************
+        *                                           *
+        * THE INTERFACE PROVING:                    *
+        *                                           *
+        * 1. A button to return to home page.       *
+        *                                           *
+        * 2. A <textarea> WHERE THE DATA IS PASTED  *
+        *                                           *
+        * 3. A button that runs the function go().  *
+        *                                           *
+        * 4. A <div> to display a status message .  *
+        *                                           *
+        ********************************************/
+
+        <h2>ADD STATE DATA</h2>
+
+        /**************
+        *             *
+        * home button *
+        *             *
+        **************/
+
+        <input type='button' value='HOME' onclick='history.go(-1)'>
+
+        <br><br>
+
+        <b>TYPE PASTE DATA</b>
+
+        <br><br>
+
+        /*************
+        *            *
+        * <textarea> *
+        *            *
+        *************/ 
+
+        <textarea id = 'data' rows = 10 cols = 140></textarea>
+
+        <br><br>
+
+        /************
+        *           *
+        * go button *
+        *           *
+        ************/
+
+        // the function go() loads all data in <textarea> to the Firebase database
+
+        <input type = 'button' value = 'GO' onclick='go()'>
+
+        </table>
+
+        <br>
+
+        /********************
+        *                   *
+        * <div> for results *
+        *                   *
+        ********************/
+
+        <span id='result' style='font-weight:bold;'></span>
+
+  </body>
+
+</html>
+
+
+
+
+
+

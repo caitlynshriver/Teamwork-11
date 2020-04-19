@@ -1,0 +1,336 @@
+<html>
+
+    <head>
+
+        <title>TEAMWORK 11</title>
+
+        <style>
+
+            body {
+
+                font-family: arial;
+
+            }
+
+            #chart {
+
+                max-width: 1200px;
+
+            }
+              
+        </style>
+
+          <script src="https://www.gstatic.com/firebasejs/7.5.1/firebase-app.js"></script>
+
+          <script src="https://www.gstatic.com/firebasejs/7.5.1/firebase-database.js"></script> 
+
+          <script src="apexcharts.js"></script>
+
+          <script>
+
+              // Your web app's Firebase configuration
+
+              var firebaseConfig = {
+                *** YOUR FIREBASE CREDENTIALS HERE ***
+               };
+
+              // Initialize Firebase
+
+              firebase.initializeApp(firebaseConfig);
+              firebase.analytics();
+
+        </script>
+
+        <!-- KEEP THESE <script> sections separate. -->
+
+        <script>
+
+        /*****************
+        *                *
+        * function go()  *
+        *                *
+        *****************/
+
+        function go() {
+
+            // Get chartType from value of <select> with id 'chartType'. use: document.getElement(...).value;
+
+            chartType = *** COMPLETE STATEMENT ***
+
+            //alert(chartType);
+
+            if (chartType == '') {
+
+                ** ADD LINE OF CODE HERE TO DISPLAY MESSAGE IN 'status' ABOUT chartType NOT SELECTED ***
+
+                return;
+
+            };
+
+            // Store chartType in localStorahe.chartType
+
+            localStorage.chartType = *** COMPLETE STATEMENT ***
+
+            // Reload this part to force the chart to redraw.
+
+            location.reload();
+
+        };
+
+
+          // load dates for x-axis
+
+          path = '/states/DATES/';
+
+          // alert(path);
+
+          firebase.database().ref(path).once('value', function(snapshot) {
+          
+            var obj = snapshot.val();
+
+            dates = obj.cases;
+
+            // alert(cases);
+
+            // dates is a list of all dates in the database. dates is delimited by ','.  split dates to the array xAxisLabels (it is used later as a chart option.)
+
+            xAxisLabels = *** COMPLETE STATEMENT ***
+
+          });
+
+
+
+
+          // get selections for all selected states. selections is from index.html
+
+          selections = localStorage.selections;
+
+          // split selections into array statesSelected. selections is delimited by ','.
+
+          statesSelected = *** COMPLETE STATEMENT ***
+
+
+          // build path to all state data
+
+          path = '/states/';
+
+          //alert(path);
+
+
+          // create an empty array that will hold all data for selected states. initially there is nothing in the array.
+
+          var series = [];
+
+
+          // get a FIrebase os all state data.
+
+          firebase.database().ref(path).once('value', function(snapshot) {
+
+
+              // process each state - one at a time. childSnapshot has data for one state.
+
+              snapshot.forEach(function(childSnapshot) {
+
+
+                  // get the name of the state being peocesses from childSnapshot. the first is ALABAMA. s
+
+                  var key = childSnapshot.key;
+
+                  state = key;
+
+
+                  // see if state is in the array of selected states
+
+                  selected = false;
+
+                  for (i = 0; i < statesSelected.length; i++) {
+
+                      if (state == statesSelected[i]) selected = true;
+
+                  };
+
+
+                  /*
+
+                    if the state is selected:
+
+                      1. get the list of casesByDay from childSnapshot. 
+
+                      2. Make casesByDay into an array. casesByDay is delimited by ','
+
+                      3. "push" the state name and array of casesByDay to the array "series" which is dislayed in the chart.
+
+                  */
+
+                  if (selected) {
+
+                      var obj = childSnapshot.val();
+
+                      casesByDAy = obj.cases;
+
+                      // Make casesByDay into an array. casesByDay is delimited by ','
+
+                      casesByDAyArray = casesByDAy.split  *** COMPLETE STATEMENT ***
+
+                      // "push" the state name and array of casesByDay to the array "series" which is dislayed in the chart.
+
+                      // Notice we are pushing onto the array a JSON dtructure with 2 name value pair.
+
+                      series.push({name: state, data: casesByDAyArray});
+
+                  };
+
+              });
+
+              /*********************************************************************
+              *                                                                    *
+              * DEFINE THE CHART OPTIONS OBJECT WHICK DETERMINES WHAT IS DISPLAYED *
+              *                                                                    *
+              *********************************************************************/
+
+              var options = {
+
+                chart: {
+                  type: localStorage.chartType,
+                  height: 500
+                },
+
+                series: series,
+
+                // These are the labels on the x-axis. There is one label for each data value for each state.
+
+                xaxis: {
+                  categories: xAxisLabels
+                }
+              }
+
+
+              // renbver the chart
+
+              var chart = new ApexCharts(document.querySelector("#chart"), options);
+
+              chart.render();
+
+
+          });
+
+
+        </script>
+        
+
+    </head>
+
+    <body>
+
+        /********************************************
+        *                                           *
+        * THE INTERFACE PROVING:                    *
+        *                                           *
+        * 1. A button to return to home page.       *
+        *                                           *
+        * 2. A <textarea> WHERE THE DATA IS PASTED  *
+        *                                           *
+        * 3. A button that runs the function go().  *
+        *                                           *
+        * 4. A <div> to display a status message.   *
+        *                                           *
+        * 5. A <div> to display chart.              *  
+        *                                           *
+        ********************************************/
+
+        /**************
+        *             *
+        * home button *
+        *             *
+        **************/
+
+        <button onclick = 'history.go(-1)'>
+
+            HOME
+
+        </button>
+
+        /*************************
+        *                        *
+        * <select> for chartType *
+        *                        *
+        *************************/ 
+
+        <select id = 'chartType' style='width: 150px;'>
+
+            <option value=''>Select Chart Type</option> -->
+            <option value='line'>line</option>
+            <option value='bar'>bar</option>
+            <option value='histogram'>histogram</option>
+            <option value='scatter'>scatter</option>
+            <option value='area'>area</option>
+            <option value='heatmap'>heatmap</option>
+
+        </select>
+
+        /************
+        *           *
+        * go button *
+        *           *
+        ************/
+
+        <button onclick = 'go()'>
+
+            GO
+
+        </button> 
+
+        /********************
+        *                   *
+        * <div> for results *
+        *                   *
+        ********************/
+
+        <span id = 'status'></span>
+
+        /******************
+        *                 *
+        * <div> for chart *
+        *                 *
+        ******************/
+
+        <h2>DAILY NEW VIRUS CASES</h2>
+
+        <div id="chart"></div>
+
+    </body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

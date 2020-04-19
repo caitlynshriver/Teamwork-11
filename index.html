@@ -1,0 +1,251 @@
+<html>
+
+	<head>
+
+		<title>TEAMWORK 11</title>
+
+		<style>
+		  
+		  body {
+
+		  	font-family: arial;
+
+		  }
+		  
+		</style>
+
+        </style>
+
+        <script src="https://www.gstatic.com/firebasejs/7.5.1/firebase-app.js"></script>
+
+        <script src="https://www.gstatic.com/firebasejs/7.5.1/firebase-database.js"></script> 
+
+        <script src="apexcharts.js"></script>
+
+        <script>
+
+          // Your web app's Firebase configuration
+
+          var firebaseConfig = {
+       		*** YOUR FIREBASE CREDENTIALS HERE ***
+           };
+
+          // Initialize Firebase
+
+          firebase.initializeApp(firebaseConfig);
+          firebase.analytics();
+
+        </script>
+
+        <!-- KEEP THESE <script> sections separate. -->
+
+        <script>
+
+
+ 
+        	/**************************
+      		*                         *
+       		* HOW SELECT IS POPULATED *
+       		*                         *
+       		**************************/
+
+
+            path = '/states/';
+
+            //alert(path);
+
+
+ 			// Set uo two variables. The secons, content, becommes the innerHTML of a div. It becomes the <select> with a list of states.
+
+			count = 0;
+
+			content = "<b>SELECT STATES</b><br><br><select id='states' multiple size = 10 style='font-size: 20px; width: 300px;'>";
+
+
+            Retrieve Data From List of Main Nodes
+
+
+            firebase.database().ref(path).once('value', function(snapshot) {
+            
+                snapshot.forEach(function(childSnapshot) {
+
+					var key = childSnapshot.key;
+
+					state = key;
+
+					if (state == 'DATES') {
+
+						// Ignore DATES because it is not a state. It is a list of dates to be displayed on chart.
+
+					} else {
+
+						content += *** COMPLETTE CODE TO ADD AN <option> FOR THE state BEING PROCESSED ***
+
+						count++;
+
+					}; 
+
+                });
+
+                // Add error message and exit if not states in database.
+
+                if (count == 0) {
+
+                     document.getElementById('result').innerHTML = "<span style='color: red; font-weight: bold;'>NO STATES IN DATABASE</span>";
+
+                     return;
+
+                };
+
+                content += '</select>';
+
+				// Display the <select> list.
+
+                document.getElementById('result').innerHTML = content;
+
+                // alert(dates);
+
+            });
+
+        </script>
+
+		<script>
+
+			/************
+			*           *
+			* makeChart *                                
+			*           *
+			************/
+
+			function makeChart() {
+
+				/***************************************************************************
+				*                                                                          *
+				* Get multiple selections from <select> and store as array in localStorage *
+				*                                                                          *
+				***************************************************************************/
+
+				/*
+
+					READ: WEB APP ESSENTIALS / JAVASCRIPT / GET ARRAY OF MULTIPLE SELECTIONS IN <select>
+
+					The page gives you the code to get selected values as an array "selections" and store it in localStorage for the next page.
+
+					Here the <select> is "states". In WEB APP ESSENTIALS the <select> is "fruits".
+
+				*/
+
+				selections = *** COMPLETTE CODE TO GET ARRAY OF STATES SELECTED IN <select with id = states' ***
+
+				if (selections == '') {
+
+					document.getElementById('status').innerHTML = "<span style = 'color:red'>SELECT AT LEAST ONE STATE</span>";
+
+					return;
+
+				};
+
+				// Store for next page.
+
+				localStorage.selections = selections;
+
+				// Go to next page.
+
+				location = 'makeChart.html';
+
+			};
+
+			/*
+
+				Load the stored chartType.
+
+				If none stored set it to 'line' and store it.
+
+				chartType is ussed in 'makeChart.html'
+
+			*/
+
+			chartType = localStorage.chartType;
+
+			//alert(chartType);
+
+			if (chartType == undefined) {
+
+				chartType = 'line';
+
+				localStorage.chartType = chartType;
+
+			};
+
+		</script>
+
+	</head>
+
+	<body>
+
+        /*****************************************************************************************
+        *                                                                                        *
+        * THE INTERFACE PROVING:                                                                 *
+        *                                                                                        *
+        * 1. ADD / UPDATE STATE DATA button to go to 'storeData.html'.                           *
+        *                                                                                        *
+        * 2. A <div> where <select> of state names is displayed when created from Firebase data  *
+        *                                                                                        *
+        * 3. GO to run makeChart() which gets selected states and goes to 'makeChart.html'       *
+       	*                                                                                        *
+         ****************************************************************************************/
+
+        <h1>TEAMWORK 11</h1>
+
+		<b>STORE DATA</b>
+
+		<br><br>
+        
+        /********************
+        *                   *
+        * store data button *
+        *                   *
+        ********************/
+
+		<button onclick="location='storeData.html'">
+
+			ADD / UPDATE STATE DATA
+
+		</button>
+
+		<br><br>
+
+		<hr>
+
+		<br>
+
+		/********
+        *       *
+        * <div> *
+        *       *
+        ********/
+
+		<div id="result"></div>
+
+		<br>
+
+		/************
+        *           *
+        * go button *
+        *           *
+        ************/
+
+		<button onclick = makeChart()>
+
+			GO
+
+		</button>
+
+		<span id = 'status'></span>
+
+	</body>
+
+
+</head>
+
+

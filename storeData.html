@@ -15,20 +15,31 @@
 
     </style>
 
-    <script src="https://www.gstatic.com/firebasejs/7.5.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-app.js"></script>
 
-    <script src="https://www.gstatic.com/firebasejs/7.5.1/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-database.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-analytics.js"></script>
+
 
     <script>
 
       // Your web app's Firebase configuration
 
       var firebaseConfig = {
-        *** YOUR FIREBASE CREDENTIALS HERE ***
-      };
+        apiKey: "AIzaSyDK2lHUWIOmp7e4yA-cUE2t9rAMYP2OSeg",
+    authDomain: "teamwork11-553c3.firebaseapp.com",
+    databaseURL: "https://teamwork11-553c3.firebaseio.com",
+    projectId: "teamwork11-553c3",
+    storageBucket: "teamwork11-553c3.appspot.com",
+    messagingSenderId: "806434445322",
+    appId: "1:806434445322:web:8a5542e4c6dc34cc5b67f3",
+    measurementId: "G-YMVRZPWR82"
+        };
+
 
       // Initialize Firebase
-
+      console.log('Initializing Firebase Database!');
       firebase.initializeApp(firebaseConfig);
       firebase.analytics();
 
@@ -43,7 +54,7 @@
         * function go()  *
         *                *
         *****************/
-
+      
         function go() {
 
             /*******************************************************
@@ -56,6 +67,8 @@
 
             data = data.trim();
 
+    
+
             /**********************************************************************
             *                                                                     *
             * if data == '' display "nice message" in the div 'result' and return *
@@ -64,26 +77,19 @@
 
            if (data == '') {
 
-                *** ADD LINE OF CODE HERE TO DISPLAY MESSAGE WItH COLOR red IN 'result' ***
+            document.getElementById('result').innerHTML = "<span style='color: red;'>NO STATES IN DATABASE</span>";
   
                 return;
 
             }
 
 
-            / *
+            states = document.getElementById('data').value;
 
-                GO TO WEB APP ESSENTIALS / JAVASCRIPT / SPLITTING DATA TO MAKE ARRAYS / EXAMPLE 2 
+            states = states.trim();
 
-                  data (one company per row) are split into the array arrayOfCompanies
+            arrayOfstates = states.split('\n');
 
-                HERE
-
-                  "data" is split to an array "states". The delimiter is '\n'
-
-            */
-
-            states = *** COMPLETE LINE ***
 
             /************************************************************************************************************************
             *                                                                                                                       *
@@ -91,9 +97,8 @@
             *                                                                                                                       *
             ************************************************************************************************************************/
 
-            Here use states. In EXAMPLE #2 allCOmpanies is used.
-
-            for (*** COMPLETE FOR LOOP HERE ***.) {
+            
+            for (i = 0; i < arrayOfstates.length; i++) {
 
                 /*
 
@@ -105,13 +110,14 @@
 
                 */
 
-                oneState = states[i];
+                oneState = arrayOfstates[i];
 
-                stateParts = *** COMPLETE LINE ***
+                stateParts = oneState.split(';');
 
-                state = *** COMPLETE LINE *** 
 
-                cases = *** COMPLETE LINE *** 
+                state = stateParts[0]; 
+
+                cases = stateParts[1];
 
                 // After getting state and cases build Firebase path for the state being processed
 
@@ -142,53 +148,21 @@
 
   <body>
 
-        /********************************************
-        *                                           *
-        * THE INTERFACE PROVING:                    *
-        *                                           *
-        * 1. A button to return to home page.       *
-        *                                           *
-        * 2. A <textarea> WHERE THE DATA IS PASTED  *
-        *                                           *
-        * 3. A button that runs the function go().  *
-        *                                           *
-        * 4. A <div> to display a status message .  *
-        *                                           *
-        ********************************************/
-
         <h2>ADD STATE DATA</h2>
-
-        /**************
-        *             *
-        * home button *
-        *             *
-        **************/
 
         <input type='button' value='HOME' onclick='history.go(-1)'>
 
         <br><br>
 
-        <b>TYPE PASTE DATA</b>
+        <b>PASTE DATA</b>
 
-        <br><br>
-
-        /*************
-        *            *
-        * <textarea> *
-        *            *
-        *************/ 
+        <br>
+        <p>Each row has: state name; comma seperated list of new virus cases per day.</p>
+        <p>Use as many lines as you wish</p>
 
         <textarea id = 'data' rows = 10 cols = 140></textarea>
 
         <br><br>
-
-        /************
-        *           *
-        * go button *
-        *           *
-        ************/
-
-        // the function go() loads all data in <textarea> to the Firebase database
 
         <input type = 'button' value = 'GO' onclick='go()'>
 
@@ -196,11 +170,8 @@
 
         <br>
 
-        /********************
-        *                   *
-        * <div> for results *
-        *                   *
-        ********************/
+      <div>
+
 
         <span id='result' style='font-weight:bold;'></span>
 

@@ -20,9 +20,9 @@
               
         </style>
 
-          <script src="https://www.gstatic.com/firebasejs/7.5.1/firebase-app.js"></script>
+          <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-app.js"></script>
 
-          <script src="https://www.gstatic.com/firebasejs/7.5.1/firebase-database.js"></script> 
+          <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-database.js"></script> 
 
           <script src="apexcharts.js"></script>
 
@@ -31,7 +31,14 @@
               // Your web app's Firebase configuration
 
               var firebaseConfig = {
-                *** YOUR FIREBASE CREDENTIALS HERE ***
+                apiKey: "AIzaSyDK2lHUWIOmp7e4yA-cUE2t9rAMYP2OSeg",
+    authDomain: "teamwork11-553c3.firebaseapp.com",
+    databaseURL: "https://teamwork11-553c3.firebaseio.com",
+    projectId: "teamwork11-553c3",
+    storageBucket: "teamwork11-553c3.appspot.com",
+    messagingSenderId: "806434445322",
+    appId: "1:806434445322:web:8a5542e4c6dc34cc5b67f3",
+    measurementId: "G-YMVRZPWR82"
                };
 
               // Initialize Firebase
@@ -90,7 +97,7 @@
 
             dates = obj.cases;
 
-            // alert(cases);
+            // alert(dates);
 
             // dates is a list of all dates in the database. dates is delimited by ','.  split dates to the array xAxisLabels (it is used later as a chart option.)
 
@@ -222,6 +229,8 @@
 
     <body>
 
+
+<!-- 
         /********************************************
         *                                           *
         * THE INTERFACE PROVING:                    *
@@ -244,17 +253,23 @@
         *             *
         **************/
 
+ -->
+
         <button onclick = 'history.go(-1)'>
 
             HOME
 
         </button>
 
+
+<!-- 
         /*************************
         *                        *
         * <select> for chartType *
         *                        *
         *************************/ 
+
+ -->
 
         <select id = 'chartType' style='width: 150px;'>
 
@@ -268,11 +283,15 @@
 
         </select>
 
+
+<!-- 
         /************
         *           *
         * go button *
         *           *
         ************/
+
+ -->
 
         <button onclick = 'go()'>
 
@@ -280,19 +299,27 @@
 
         </button> 
 
+
+<!-- 
         /********************
         *                   *
         * <div> for results *
         *                   *
         ********************/
 
+ -->
+
         <span id = 'status'></span>
 
+
+<!-- 
         /******************
         *                 *
         * <div> for chart *
         *                 *
         ******************/
+
+ -->
 
         <h2>DAILY NEW VIRUS CASES</h2>
 
@@ -301,36 +328,3 @@
     </body>
 
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

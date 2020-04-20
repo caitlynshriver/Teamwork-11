@@ -16,9 +16,9 @@
 
         </style>
 
-        <script src="https://www.gstatic.com/firebasejs/7.5.1/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-app.js"></script>
 
-        <script src="https://www.gstatic.com/firebasejs/7.5.1/firebase-database.js"></script> 
+        <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-database.js"></script> 
 
         <script src="apexcharts.js"></script>
 
@@ -27,7 +27,14 @@
           // Your web app's Firebase configuration
 
           var firebaseConfig = {
-       		*** YOUR FIREBASE CREDENTIALS HERE ***
+			apiKey: "AIzaSyDK2lHUWIOmp7e4yA-cUE2t9rAMYP2OSeg",
+    authDomain: "teamwork11-553c3.firebaseapp.com",
+    databaseURL: "https://teamwork11-553c3.firebaseio.com",
+    projectId: "teamwork11-553c3",
+    storageBucket: "teamwork11-553c3.appspot.com",
+    messagingSenderId: "806434445322",
+    appId: "1:806434445322:web:8a5542e4c6dc34cc5b67f3",
+    measurementId: "G-YMVRZPWR82"
            };
 
           // Initialize Firebase
@@ -52,7 +59,7 @@
 
             path = '/states/';
 
-            //alert(path);
+            alert(path);
 
 
  			// Set uo two variables. The secons, content, becommes the innerHTML of a div. It becomes the <select> with a list of states.
@@ -62,7 +69,7 @@
 			content = "<b>SELECT STATES</b><br><br><select id='states' multiple size = 10 style='font-size: 20px; width: 300px;'>";
 
 
-            Retrieve Data From List of Main Nodes
+            //Retrieve Data From List of Main Nodes
 
 
             firebase.database().ref(path).once('value', function(snapshot) {
@@ -183,6 +190,7 @@
 
 	<body>
 
+<!-- 
         /*****************************************************************************************
         *                                                                                        *
         * THE INTERFACE PROVING:                                                                 *
@@ -194,6 +202,7 @@
         * 3. GO to run makeChart() which gets selected states and goes to 'makeChart.html'       *
        	*                                                                                        *
          ****************************************************************************************/
+ -->
 
         <h1>TEAMWORK 11</h1>
 
@@ -201,11 +210,13 @@
 
 		<br><br>
         
-        /********************
+
+<!--    /********************
         *                   *
         * store data button *
         *                   *
         ********************/
+ -->
 
 		<button onclick="location='storeData.html'">
 
@@ -219,21 +230,27 @@
 
 		<br>
 
+
+<!-- 	
 		/********
         *       *
         * <div> *
         *       *
         ********/
+ -->
 
 		<div id="result"></div>
 
 		<br>
 
+
+<!-- 
 		/************
         *           *
         * go button *
         *           *
         ************/
+ -->
 
 		<button onclick = makeChart()>
 
@@ -247,5 +264,3 @@
 
 
 </head>
-
-

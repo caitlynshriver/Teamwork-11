@@ -18,7 +18,9 @@
 
         <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-app.js"></script>
 
-        <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-database.js"></script> 
+		<script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-database.js"></script> 
+		
+		<script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-analytics.js"></script>
 
         <script src="apexcharts.js"></script>
 
@@ -39,6 +41,7 @@
 
           // Initialize Firebase
 
+		  console.log('Initializing Firebase Database!');
           firebase.initializeApp(firebaseConfig);
           firebase.analytics();
 
@@ -59,7 +62,7 @@
 
             path = '/states/';
 
-            alert(path);
+            //alert(path);
 
 
  			// Set uo two variables. The secons, content, becommes the innerHTML of a div. It becomes the <select> with a list of states.
@@ -86,7 +89,9 @@
 
 					} else {
 
-						content += *** COMPLETTE CODE TO ADD AN <option> FOR THE state BEING PROCESSED ***
+						//*** COMPLETTE CODE TO ADD AN <option> FOR THE state BEING PROCESSED ***
+
+						content += "<option>" + state;
 
 						count++;
 
@@ -142,7 +147,9 @@
 
 				*/
 
-				selections = *** COMPLETTE CODE TO GET ARRAY OF STATES SELECTED IN <select with id = states' ***
+				//*** COMPLETTE CODE TO GET ARRAY OF STATES SELECTED IN <select with id = states' ***
+
+				selections = Array.from(states.selectedOptions).map(o => o.value);
 
 				if (selections == '') {
 
@@ -168,13 +175,15 @@
 
 				If none stored set it to 'line' and store it.
 
-				chartType is ussed in 'makeChart.html'
+				chartType is used in 'makeChart.html'
 
 			*/
-
+			console.log("index"+ localStorage.chartType);
 			chartType = localStorage.chartType;
+            chartType = 'line';
+			localStorage.chartType = chartType;
 
-			//alert(chartType);
+			alert("Index script: "+chartType);
 
 			if (chartType == undefined) {
 

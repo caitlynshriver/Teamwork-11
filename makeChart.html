@@ -24,6 +24,8 @@
 
           <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-database.js"></script> 
 
+          <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-analytics.js"></script>
+
           <script src="apexcharts.js"></script>
 
           <script>
@@ -58,17 +60,19 @@
         *                *
         *****************/
 
-        function go() {
+        function makechartGo() {
 
             // Get chartType from value of <select> with id 'chartType'. use: document.getElement(...).value;
 
-            chartType = *** COMPLETE STATEMENT ***
+            chartType = document.getElementById('chartType').value;
+            localStorage.chartType = chartType;
+            console.log(chartType);
 
-            //alert(chartType);
+            alert("MakechartsGo: "+chartType);
 
             if (chartType == '') {
 
-                ** ADD LINE OF CODE HERE TO DISPLAY MESSAGE IN 'status' ABOUT chartType NOT SELECTED ***
+                document.getElementById('chartType').value = "<span style='color: red;'>CHART TYPE NOT SELECTED</span>";
 
                 return;
 
@@ -76,7 +80,7 @@
 
             // Store chartType in localStorahe.chartType
 
-            localStorage.chartType = *** COMPLETE STATEMENT ***
+            localStorage.chartType = chartType
 
             // Reload this part to force the chart to redraw.
 
@@ -96,12 +100,13 @@
             var obj = snapshot.val();
 
             dates = obj.cases;
+            // console.log(dates)
 
             // alert(dates);
 
             // dates is a list of all dates in the database. dates is delimited by ','.  split dates to the array xAxisLabels (it is used later as a chart option.)
 
-            xAxisLabels = *** COMPLETE STATEMENT ***
+            xAxisLabels = dates.split(',');
 
           });
 
@@ -114,7 +119,7 @@
 
           // split selections into array statesSelected. selections is delimited by ','.
 
-          statesSelected = *** COMPLETE STATEMENT ***
+          statesSelected = selections.split(',');
 
 
           // build path to all state data
@@ -177,11 +182,12 @@
 
                       // Make casesByDay into an array. casesByDay is delimited by ','
 
-                      casesByDAyArray = casesByDAy.split  *** COMPLETE STATEMENT ***
+                      casesByDAyArray = casesByDAy.split(',');
+                      //console.log(casesByDAyArray);
 
                       // "push" the state name and array of casesByDay to the array "series" which is dislayed in the chart.
 
-                      // Notice we are pushing onto the array a JSON dtructure with 2 name value pair.
+                      // Notice we are pushing onto the array a JSON structure with 2 name value pair.
 
                       series.push({name: state, data: casesByDAyArray});
 
@@ -212,7 +218,8 @@
               }
 
 
-              // renbver the chart
+              // render the chart
+              console.log(localStorage.chartType);
 
               var chart = new ApexCharts(document.querySelector("#chart"), options);
 
@@ -293,7 +300,7 @@
 
  -->
 
-        <button onclick = 'go()'>
+        <button onclick = 'makechartGo()'>
 
             GO
 
